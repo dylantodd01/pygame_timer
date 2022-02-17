@@ -1,4 +1,4 @@
-A simple timer in pygame to help me understand multithreading.
+A simple timer in pygame to help me understand multi-threading.
 
 To run, enter Timer(minutes, seconds)
 
