@@ -6,4 +6,3 @@ To run, enter Timer(minutes, seconds)
 - Improve UI
 - Allow user to input time in GUI
 - Create a 'time's up' screen or animation
-- Add sound
