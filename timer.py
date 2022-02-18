@@ -6,24 +6,27 @@ class Timer:
 
 	def __init__(self, minutes, seconds):
 
-		self.WIDTH, self.HEIGHT = 400, 200
 
+		self.WIDTH, self.HEIGHT = 400, 200
 		self.BLACK = (0, 0, 0)
 		self.WHITE = (255, 255, 255)
+		self.BLUE = (115, 147, 255)
 
+		# Initialise pygame and load the alarm sound
 		pygame.init()
-
 		pygame.mixer.music.load("alarm_sound.mp3")
 
-		self.font = pygame.font.SysFont(None, 120)
+		# Set up window
+		self.font = pygame.font.SysFont("bahnschrift", 120)
 		self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_caption("Timer")
 
-
+		# Set up timer
 		self.seconds = seconds + (60 * minutes)
-
+		self.start_seconds = self.seconds
 		self.timer = threading.Thread(target=self.run_timer)
 
+		# Run main loop
 		self.main()
 
 
@@ -54,9 +57,11 @@ class Timer:
 
 	def update_screen(self):
 
-		self.screen.fill(self.BLACK)
+		self.screen.fill(self.WHITE)
 		self.format_time()
-		self.write_text(self.time_output, (((self.WIDTH // 2) - 110, self.HEIGHT // 2)), self.WHITE)
+		self.write_text(self.time_output, (((self.WIDTH // 2) - 140, (self.HEIGHT // 2) - 10)), self.BLACK)
+		self.draw_progress_bar()
+		self.draw_box()
 
 
 		pygame.display.update()
@@ -66,7 +71,6 @@ class Timer:
 
 		seconds = str(self.seconds % 60)
 		minutes = str(self.seconds // 60)
-
 		seconds = ("0" + seconds) if len(seconds) < 2 else seconds
 		minutes = ("0" + minutes) if len(minutes) < 2 else minutes
 
@@ -80,9 +84,22 @@ class Timer:
 		self.screen.blit(text, text_rect)
 
 
+	def draw_progress_bar(self):
+
+		progress = (self.start_seconds - self.seconds) / self.start_seconds
+		progress_bar_rect = pygame.Rect(0, self.HEIGHT - 10, round(self.WIDTH * progress), self.HEIGHT)
+		pygame.draw.rect(self.screen, self.BLUE, progress_bar_rect)
 
 
-Timer(minutes=0, seconds=5)
+	def draw_box(self):
+
+		box = pygame.Rect((self.WIDTH // 2) - 150, (self.HEIGHT // 2) - 75, (self.WIDTH // 2) + 107, (self.HEIGHT // 2) + 40)
+		pygame.draw.rect(self.screen, self.BLACK, box, 2)
+
+
+
+
+Timer(minutes=7, seconds=10)
 
 
 
