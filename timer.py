@@ -13,9 +13,12 @@ class Timer:
 
 		pygame.init()
 
+		pygame.mixer.music.load("alarm_sound.mp3")
+
 		self.font = pygame.font.SysFont(None, 120)
 		self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
 		pygame.display.set_caption("Timer")
+
 
 		self.seconds = seconds + (60 * minutes)
 
@@ -43,8 +46,10 @@ class Timer:
 
 		while self.seconds > 0:
 
-			self.seconds -= 1
 			time.sleep(1)
+			self.seconds -= 1
+
+		pygame.mixer.music.play()
 
 
 	def update_screen(self):
@@ -76,7 +81,8 @@ class Timer:
 
 
 
-Timer(minutes=2, seconds=30)
+
+Timer(minutes=0, seconds=5)
 
 
 
